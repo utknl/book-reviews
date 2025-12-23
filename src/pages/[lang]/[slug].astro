@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { mapBook } from '../../utils/book';
+
+export async function getStaticPaths() {
+  const books = await getCollection('books');
+  return books.map((entry) => {
+    // entry.slug is something like "en/0001" or "tr/0001"
+    const [lang, ...slugParts] = entry.slug.split('/');
+    const slug = slugParts.join('/');
+    return {
+      params: { lang, slug },
+      props: { entry },
+    };
+  });
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const book = mapBook(entry);
+---
+
+<Layout title={book.title} lang={book.lang}>
+  <article class="prose prose-neutral dark:prose-invert max-w-none prose-headings:font-normal prose-a:text-[var(--color-text)]">
+    <header class="mb-12 border-b border-[var(--color-border)] pb-8">
+      <div class="flex flex-col gap-2 mb-4">
+        <h1 class="text-3xl font-bold mb-0">{book.title}</h1>
+        <p class="text-lg opacity-80">{book.author}</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm opacity-60 uppercase tracking-widest mt-6">
+        <div>
+          <span class="block text-[10px] opacity-70 mb-1">{book.lang === 'en' ? 'Rating' : 'Puan'}</span>
+          {book.rating}
+        </div>
+        <div>
+          <span class="block text-[10px] opacity-70 mb-1">{book.lang === 'en' ? 'Difficulty' : 'Okuma Kolaylığı'}</span>
+          {book.easeOfReading}
+        </div>
+        <div>
+          <span class="block text-[10px] opacity-70 mb-1">{book.lang === 'en' ? 'Year' : 'Okuduğum Yıl'}</span>
+          {book.yearRead}
+        </div>
+        <div>
+          <span class="block text-[10px] opacity-70 mb-1">{book.lang === 'en' ? 'Tags' : 'Etiketler'}</span>
+          {book.tags.join(', ')}
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <Content />
+    </div>
+  </article>
+</Layout>
+
+<style>
+  /* Custom prose overrides to match the minimalist aesthetic if needed */
+  .content :global(p) {
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+  }
+</style>

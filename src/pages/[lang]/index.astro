@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { mapBook } from '../../utils/book';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'tr' } },
+  ];
+}
+
+const { lang } = Astro.params;
+
+// Fetch all books
+const allBooks = await getCollection('books');
+
+// Filter by language (check if the ID generally starts with the lang folder name)
+// Astro content collections IDs are file paths relative to collection root, e.g. "en/0001.md"
+const books = allBooks
+  .filter((entry) => entry.id.startsWith(`${lang}/`))
+  .map(mapBook);
+
+const title = lang === 'en' ? 'Book Reviews' : 'Kitap İncelemeleri';
+---
+
+<Layout title={title} lang={lang as "en" | "tr"}>
+  <div class="grid gap-8">
+    {books.map((book) => (
+      <a 
+        href={`/${lang}/${book.slug.split('/').pop()}`}
+        class="block group p-6 border border-[var(--color-border)] rounded-sm hover:border-[var(--color-text)] transition-colors"
+      >
+        <div class="flex justify-between items-baseline mb-2">
+          <h2 class="text-xl font-bold group-hover:underline decoration-1 underline-offset-4">
+            {book.title}
+          </h2>
+          <span class="text-sm opacity-60">{book.yearRead}</span>
+        </div>
+        
+        <p class="text-sm mb-4 opacity-80">{book.author}</p>
+        
+        <div class="flex gap-4 text-xs uppercase tracking-wider opacity-60">
+          <span>{lang === 'en' ? 'Rating' : 'Puan'}: {book.rating}</span>
+          <span>{lang === 'en' ? 'Difficulty' : 'Kolaylık'}: {book.easeOfReading}</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</Layout>
