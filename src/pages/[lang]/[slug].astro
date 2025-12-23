@@ -31,11 +31,11 @@ const book = mapBook(entry);
 
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm opacity-60 uppercase tracking-widest mt-6">
         <div>
-          <span class="block text-[10px] opacity-70 mb-1">{book.lang === 'en' ? 'Rating' : 'Puan'}</span>
+          <span class="block text-[10px] opacity-70 mb-1">{book.lang === 'en' ? 'My Rating' : 'Puanım'}</span>
           {book.rating}
         </div>
         <div>
-          <span class="block text-[10px] opacity-70 mb-1">{book.lang === 'en' ? 'Difficulty' : 'Okuma Kolaylığı'}</span>
+          <span class="block text-[10px] opacity-70 mb-1">{book.lang === 'en' ? 'Ease of reading' : 'Okuma Kolaylığı'}</span>
           {book.easeOfReading}
         </div>
         <div>
@@ -43,8 +43,8 @@ const book = mapBook(entry);
           {book.yearRead}
         </div>
         <div>
-          <span class="block text-[10px] opacity-70 mb-1">{book.lang === 'en' ? 'Tags' : 'Etiketler'}</span>
-          {book.tags.join(', ')}
+          <span class="block text-[10px] opacity-70 mb-1">{book.lang === 'en' ? 'Favorite Character' : 'En Sevdiğim Karakter'}</span>
+          {book.favoriteCharacter}
         </div>
       </div>
     </header>

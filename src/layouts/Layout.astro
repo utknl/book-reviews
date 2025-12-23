@@ -8,6 +8,11 @@ interface Props {
 
 const { title, lang } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const pathname = Astro.url.pathname;
+
+const enUrl = lang === 'en' ? pathname : pathname.replace(`/${lang}`, '/en');
+const trUrl = lang === 'tr' ? pathname : pathname.replace(`/${lang}`, '/tr');
+const homeUrl = `${base}/${lang}`;
 ---
 
 <!doctype html>
@@ -23,9 +28,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <body class="min-h-screen px-4 py-8 max-w-3xl mx-auto">
     <header class="mb-12">
       <div class="flex justify-between items-center">
-        <nav class="flex gap-4">
-          <a href={`${base}/en`} class={lang === 'en' ? 'font-bold underline' : 'opacity-60 hover:opacity-100'}>[EN]</a>
-          <a href={`${base}/tr`} class={lang === 'tr' ? 'font-bold underline' : 'opacity-60 hover:opacity-100'}>[TR]</a>
+        <nav class="flex gap-4 items-center">
+          <a href={homeUrl} class="opacity-60 hover:opacity-100 text-lg leading-none pb-1" aria-label="Home">🏠</a>
+          <div class="w-px h-4 bg-[var(--color-border)] mx-1"></div>
+          <a href={enUrl} class={lang === 'en' ? 'font-bold underline' : 'opacity-60 hover:opacity-100'}>[EN]</a>
+          <a href={trUrl} class={lang === 'tr' ? 'font-bold underline' : 'opacity-60 hover:opacity-100'}>[TR]</a>
         </nav>
         
         <button id="theme-toggle" class="cursor-pointer opacity-80 hover:opacity-100 text-xl" aria-label="Toggle theme">

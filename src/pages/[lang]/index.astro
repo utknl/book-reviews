@@ -19,6 +19,7 @@ const allBooks = await getCollection('books');
 // Astro content collections IDs are file paths relative to collection root, e.g. "en/0001.md"
 const books = allBooks
   .filter((entry) => entry.id.startsWith(`${lang}/`))
+  .sort((a, b) => b.id.localeCompare(a.id))
   .map(mapBook);
 
 const title = lang === 'en' ? 'Book Reviews' : 'Kitap İncelemeleri';
@@ -42,8 +43,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <p class="text-sm mb-4 opacity-80">{book.author}</p>
         
         <div class="flex gap-4 text-xs uppercase tracking-wider opacity-60">
-          <span>{lang === 'en' ? 'Rating' : 'Puan'}: {book.rating}</span>
-          <span>{lang === 'en' ? 'Difficulty' : 'Kolaylık'}: {book.easeOfReading}</span>
+          <span>{lang === 'en' ? 'My Rating' : 'Puanım'}: {book.rating}</span>
+          <span>{lang === 'en' ? 'Ease of reading' : 'Okuma Kolaylığı'}: {book.easeOfReading}</span>
         </div>
       </a>
     ))}
