@@ -22,13 +22,14 @@ const books = allBooks
   .map(mapBook);
 
 const title = lang === 'en' ? 'Book Reviews' : 'Kitap İncelemeleri';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout title={title} lang={lang as "en" | "tr"}>
   <div class="grid gap-8">
     {books.map((book) => (
       <a 
-        href={`/${lang}/${book.slug.split('/').pop()}`}
+        href={`${base}/${lang}/${book.slug.split('/').pop()}`}
         class="block group p-6 border border-[var(--color-border)] rounded-sm hover:border-[var(--color-text)] transition-colors"
       >
         <div class="flex justify-between items-baseline mb-2">

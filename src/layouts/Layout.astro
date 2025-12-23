@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { title, lang } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <!doctype html>
@@ -15,7 +16,7 @@ const { title, lang } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="description" content="Minimalist Book Reviews" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
@@ -23,8 +24,8 @@ const { title, lang } = Astro.props;
     <header class="mb-12">
       <div class="flex justify-between items-center">
         <nav class="flex gap-4">
-          <a href="/en" class={lang === 'en' ? 'font-bold underline' : 'opacity-60 hover:opacity-100'}>[EN]</a>
-          <a href="/tr" class={lang === 'tr' ? 'font-bold underline' : 'opacity-60 hover:opacity-100'}>[TR]</a>
+          <a href={`${base}/en`} class={lang === 'en' ? 'font-bold underline' : 'opacity-60 hover:opacity-100'}>[EN]</a>
+          <a href={`${base}/tr`} class={lang === 'tr' ? 'font-bold underline' : 'opacity-60 hover:opacity-100'}>[TR]</a>
         </nav>
         
         <button id="theme-toggle" class="cursor-pointer opacity-80 hover:opacity-100 text-xl" aria-label="Toggle theme">
