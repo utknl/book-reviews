@@ -35,7 +35,7 @@ A minimalist, bilingual (English/Turkish) book review site built with **Astro** 
 ---
 Book: "The Stranger"
 Author: "Albert Camus"
-How Much I liked it: "9/10"
+How Much I liked it: "8/10"
 Ease of reading: "8/10"
 Year I read it: "2025"
 Tags: ["philosophy", "classic"]
@@ -50,7 +50,7 @@ Your review content goes here...
 ---
 Kitap: "Yabancı"
 Yazar: "Albert Camus"
-Ne Kadar Beğendim: "9/10"
+Ne Kadar Beğendim: "8/10"
 Okuma Kolaylığı: "8/10"
 Okuduğum Yıl: "2025"
 Etiketler: ["felsefe", "klasik"]
